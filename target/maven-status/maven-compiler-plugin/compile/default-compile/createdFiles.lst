@@ -3,3 +3,4 @@ controller/realizarCriticaServlet.class
 controller/listarEntradasServlet.class
 controller/TemplateServlet.class
 uv/es/g01/proyectofinalweb/proyectofinalweb/resources/JavaEE8Resource.class
+controller/comprarEntradaServlet.class

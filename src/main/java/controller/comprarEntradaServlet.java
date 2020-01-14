@@ -5,40 +5,42 @@
  */
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import uv.es.g01.proyectofinal.entity.Compra;
-import uv.es.g01.proyectofinal.entity.Entrada;
 import uv.es.g01.proyectofinal.service.ServiceEntrada;
 
 /**
  *
  * @author danilosalaz
  */
-@WebServlet("/compradas")
-public class listarEntradasServlet extends TemplateServlet {
-
-    public listarEntradasServlet() {
+@WebServlet("/comprar")
+public class comprarEntradaServlet extends TemplateServlet{
+    
+    public comprarEntradaServlet() {
         super(new Compra());
     }
-
+    
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        
         ServiceEntrada service = new ServiceEntrada();
-        List<Compra> listEntradas = service.getEntradasCompradas(Integer.parseInt(req.getParameter("id")));
+        
+        Compra nuevaCompra = gson.fromJson(reader, Compra.class);
+        
+        service.comprarEntrada(nuevaCompra.getUsuario().getIdUsuario(), nuevaCompra.getEntradas(), nuevaCompra.getMetodoPago());
+        resp.setStatus(200);
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        responseJson(resp.getWriter(), listEntradas);
         
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

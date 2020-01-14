@@ -24,7 +24,7 @@ public class TemplateServlet<T> extends HttpServlet{
     }
     
     public void responseJson(PrintWriter pw, T Object){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonResponse = gson.toJson(Object);
         
         pw.println(jsonResponse);

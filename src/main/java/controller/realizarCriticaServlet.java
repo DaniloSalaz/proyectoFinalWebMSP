@@ -19,6 +19,7 @@ import uv.es.g01.proyectofinal.service.ServicePelicula;
  *
  * @author danilosalaz
  */
+
 @WebServlet("/peliculas")
 public class realizarCriticaServlet extends TemplateServlet{
     
@@ -35,7 +36,12 @@ public class realizarCriticaServlet extends TemplateServlet{
         ServicePelicula service = new ServicePelicula();
         Pelicula peliculaJson = gson.fromJson(reader, Pelicula.class);
         if(service.setCritica(peliculaJson.getIdPelicula(), peliculaJson.getCritica().get(peliculaJson.getCritica().size() -1))){
-           resp.setStatus(200); 
+            responseJson(resp.getWriter(), service.getPelicula(peliculaJson.getIdPelicula()));
+            resp.setStatus(200); 
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            resp.setHeader("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+            resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+            
         }else{
             resp.sendError(500);
         }

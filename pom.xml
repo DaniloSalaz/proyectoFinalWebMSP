@@ -24,7 +24,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>uv.es.G01</groupId>
+            <groupId>com.mycompany</groupId>
             <artifactId>ProyectoFinalGrupo1</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
